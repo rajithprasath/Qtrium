@@ -7,6 +7,7 @@ User can view github user's basic details,pinned, top and starred repositories
 
 # The app has following modules:
 This project implemented on a multi module structure
+
 1)data-layer: It contains all the data accessing and manipulating components.
 
 2)domain-layer: It contains all model and domian contract
