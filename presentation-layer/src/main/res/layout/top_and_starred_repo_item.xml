@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="edge"
+            type="com.rajith.otrium.domain_layer.domain.Edge" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/ic_card_bg"
+        android:paddingBottom="25dp"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView"/>
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            app:layout_constraintStart_toEndOf="@+id/iv_avatar"
+            app:layout_constraintTop_toTopOf="@+id/iv_avatar"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_gravity="center"
+            android:text="@{edge.node.owner.login}"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/source_sans_pro_regular"
+            android:textColor="@color/colorBlack"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_avatar"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:text="@{edge.node.name}"
+            android:fontFamily="@font/source_sans_pro_semi_bold"
+            android:textColor="@color/colorBlack"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_marginTop="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            android:layout_gravity="center"
+            android:text="@{edge.node.description}"
+            android:fontFamily="@font/source_sans_pro_regular"
+            android:textColor="@color/colorBlack"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textSize="20sp"/>
+
+        <ImageView
+            android:id="@+id/iv_star"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_starr"
+            android:layout_marginTop="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/tv_fork_count"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@{Integer.toString(edge.node.forkCount)}"
+            android:gravity="start"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_star"
+            app:layout_constraintTop_toTopOf="@+id/iv_star"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_star"
+            android:layout_gravity="center"
+            android:fontFamily="@font/source_sans_pro_regular"
+            android:textColor="@color/colorBlack"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textSize="20sp"/>
+
+        <ImageView
+            android:id="@+id/iv_oval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_oval"
+            app:layout_constraintStart_toEndOf="@+id/tv_fork_count"
+            app:layout_constraintTop_toTopOf="@+id/tv_fork_count"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_fork_count">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/tv_language"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@{edge.node.primaryLanguage.name}"
+            android:gravity="start"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_oval"
+            app:layout_constraintTop_toTopOf="@+id/iv_oval"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_oval"
+            android:layout_gravity="center"
+            android:fontFamily="@font/source_sans_pro_regular"
+            android:textColor="@color/colorBlack"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textSize="20sp"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="lbl_profile">Profile</string>
+    <string name="lbl_pinned">Pinned</string>
+    <string name="lbl_top_repositories">Top repositories</string>
+    <string name="lbl_starred_repositories">Starred repositories</string>
+    <string name="lbl_view_all"><u>View all</u></string>
+    <string name="txt_followers">%1$s followers</string>
+    <string name="txt_following">%1$s following</string>
+</resources>
