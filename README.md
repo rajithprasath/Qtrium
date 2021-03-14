@@ -1,9 +1,9 @@
 # Qtrium
 
-This is a Github User Profile Using QraphQl which written in kotlin
+This is a Github User Profile screen which fetch data using GraphQl Api and written in kotlin
 
 # Features
-User can view github user's profile details and pinned, top and starred repositories
+User can view github user's basic details,pinned, top and starred repositories
 
 # The app has following modules:
 This project implemented on a multi module structure
