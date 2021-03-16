@@ -24,3 +24,5 @@ In this project, I have used Android Architecture Components and AndroidX
 
 # Installation and Testing 
 if you face a DaggarAppComponent Error, Rebuild the project and import DaggarAppComponent in QtriumApplication class
+
+Please use your own github aceess token for testing
