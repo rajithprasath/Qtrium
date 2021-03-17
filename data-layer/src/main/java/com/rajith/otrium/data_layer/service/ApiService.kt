@@ -12,7 +12,7 @@ import retrofit2.http.POST
  */
 
 interface ApiService {
-    @Headers("Authorization:Bearer 15b5ab261bd74856de14486e11179d9e3320c8f3")
+    @Headers("Authorization:Bearer 3f4f05e86494673a9b986ee3739202791db21267")
     @POST("graphql")
     suspend fun getUserProfile(@Body jsonQuery: Query): Response<Result>
 

@@ -17,7 +17,6 @@ import java.net.SocketTimeoutException
 object UserRepository : DomainLayerContract.Data.DataRepository<Result> {
 
     lateinit var profileDataSource: ProfileDataSource
-
     @Throws(SocketTimeoutException::class)
     override suspend fun fetchUserData(request: Query): Either<Failure, Result> =
         try {
@@ -30,4 +29,6 @@ object UserRepository : DomainLayerContract.Data.DataRepository<Result> {
             Failure.ServerError(e.localizedMessage ?: "Server error").left()
         }
 
+
 }
+

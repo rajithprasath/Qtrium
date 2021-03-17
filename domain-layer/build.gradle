@@ -45,6 +45,8 @@ dependencies {
     api "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
+    implementation 'com.epam.coroutinecache:coroutinecache:0.9.0'
+
     // testing dependencies - Unit Test
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

@@ -1,5 +1,6 @@
 package com.rajith.otrium.data_layer.di
 
+import android.content.Context
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.rajith.otrium.data_layer.BuildConfig
 import com.rajith.otrium.data_layer.datasource.ProfileApiDataSource
@@ -11,11 +12,13 @@ import com.rajith.otrium.domain_layer.DomainLayerContract.Data.Companion.DATA_RE
 import com.rajith.otrium.domain_layer.domain.Result
 import dagger.Module
 import dagger.Provides
-import okhttp3.OkHttpClient
+import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.io.File
+import java.io.IOException
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 
@@ -37,6 +40,7 @@ object RepositoryModule {
 
 }
 
+
 @Module
 class DataSourceModule {
     @Provides
@@ -44,8 +48,8 @@ class DataSourceModule {
     fun provideProfileDataSource(ds: ProfileApiDataSource): ProfileDataSource = ds
 
     @Provides
-    fun provideRetrofitInstance(): Retrofit = Retrofit.Builder()
-        .client(getHttpClient())
+    fun provideRetrofitInstance(context: Context): Retrofit = Retrofit.Builder()
+        .client(getHttpClient(context))
         .addConverterFactory(GsonConverterFactory.create())
         .addConverterFactory(ScalarsConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
@@ -54,16 +58,55 @@ class DataSourceModule {
 
 }
 
-fun getHttpClient(): OkHttpClient {
-    val interceptor = HttpLoggingInterceptor()
+fun getHttpClient(context: Context): OkHttpClient {
+    val httpCacheDirectory = File(context.cacheDir, "offlineCache")
+    val cache = Cache(httpCacheDirectory, 10 * 1024 * 1024)
+
+    val httpLoggingInterceptor = HttpLoggingInterceptor()
     if (BuildConfig.DEBUG) {
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
     } else {
-        interceptor.level = HttpLoggingInterceptor.Level.NONE
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
     }
     return OkHttpClient.Builder()
-        .addInterceptor(interceptor)
+        .cache(cache)
+        .addInterceptor(httpLoggingInterceptor)
+        .addNetworkInterceptor(provideCacheInterceptor())
+        .addInterceptor(provideOfflineCacheInterceptor())
         .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
         .readTimeout(TIMEOUT, TimeUnit.SECONDS)
         .build()
+}
+
+private fun provideCacheInterceptor(): Interceptor {
+    return object : Interceptor {
+        @Throws(IOException::class)
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val originalResponse: Response = chain.proceed(chain.request())
+            val cacheControl = originalResponse.header("Cache-Control")
+            return if (cacheControl == null || cacheControl.contains("no-store") || cacheControl.contains(
+                    "no-cache"
+                ) ||
+                cacheControl.contains("must-revalidate") || cacheControl.contains("max-age=0")
+            ) {
+                originalResponse.newBuilder()
+                    .removeHeader("Pragma")
+                    .header("Cache-Control", "public, max-age=" + 60 * 60 * 24)
+                    .build()
+            } else {
+                originalResponse
+            }
+        }
+    }
+}
+
+private fun provideOfflineCacheInterceptor(): Interceptor {
+    return object : Interceptor {
+        @Throws(IOException::class)
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val request: Request = chain.request()
+            return chain.proceed(request)
+        }
+    }
+
 }

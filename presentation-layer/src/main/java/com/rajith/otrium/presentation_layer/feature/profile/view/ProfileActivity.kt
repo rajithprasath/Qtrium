@@ -2,12 +2,14 @@ package com.rajith.otrium.presentation_layer.feature.profile.view
 
 
 import android.app.Activity
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.rajith.otrium.domain_layer.domain.Edge
@@ -50,6 +52,18 @@ class ProfileActivity : Activity(), ProfileContract.View {
         setContentView(viewBinding.root)
         showCustomUI(this)
         presenter.onViewCreated()
+        viewBinding.pullToRefresh.setProgressBackgroundColorSchemeColor(
+            ContextCompat.getColor(
+                this,
+                R.color.colorBlack
+            )
+        )
+        viewBinding.pullToRefresh.setColorSchemeColors(Color.WHITE)
+
+        viewBinding.pullToRefresh.setOnRefreshListener {
+            presenter.getUserDetails()
+            viewBinding.pullToRefresh.isRefreshing = false
+        }
     }
 
     /**

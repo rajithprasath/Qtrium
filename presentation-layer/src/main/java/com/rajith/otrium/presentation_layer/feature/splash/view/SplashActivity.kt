@@ -29,7 +29,6 @@ class SplashActivity : Activity(), SplashContract.View {
         super.onCreate(savedInstanceState)
         viewBinding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-
         val w = window
         w.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,

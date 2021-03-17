@@ -31,8 +31,10 @@ class ProfilePresenter @Inject constructor(
     }
 
     override fun getUserDetails() {
+        println("HELOO 00000 " )
         val queryBody = Query(getQueryString())
         view.showLoading()
+
         fetchDataFactUc.invoke(scope = this, params = queryBody, onResult = {
             view.hideLoading()
             it.fold(::handleError, ::handleFetchDataFactSuccess)

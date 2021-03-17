@@ -20,11 +20,7 @@ interface ProfileDataSource {
 
 class ProfileApiDataSource @Inject constructor(private val retrofit: Retrofit) :
     ProfileDataSource {
-
-    override suspend fun fetchUserDetails(request: Query): Response<Result> =
-        retrofit.create(ApiService::class.java)
-            .getUserProfile(
-                jsonQuery = request,
-            )
-
-}
+    override suspend fun fetchUserDetails(request: Query): Response<Result> = retrofit.create(ApiService::class.java)
+        .getUserProfile(
+            jsonQuery = request,
+        )  }
