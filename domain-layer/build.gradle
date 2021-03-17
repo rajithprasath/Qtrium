@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 
 apply plugin: 'kotlin-android'
+
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -46,6 +47,8 @@ dependencies {
 
     // testing dependencies - Unit Test
     testImplementation "junit:junit:$junit_version"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$nhaarmanmockito_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 }

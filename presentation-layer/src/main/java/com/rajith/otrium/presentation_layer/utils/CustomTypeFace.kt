@@ -5,7 +5,11 @@ import android.graphics.Typeface
 import android.text.TextPaint
 import android.text.style.TypefaceSpan
 
-class CustomTypeFace(val typefaceFont: Typeface) : TypefaceSpan("") {
+/**
+ * This class provides the custom typeface that will be used in Spannable String builder
+ */
+
+class CustomTypeFace(private val typefaceFont: Typeface) : TypefaceSpan("") {
 
     override fun updateDrawState(textPaint: TextPaint) {
         applyCustomTypeFace(textPaint)

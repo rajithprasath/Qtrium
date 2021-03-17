@@ -2,10 +2,8 @@ package com.rajith.otrium.presentation_layer.feature.splash.view
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.view.View
 import android.view.WindowManager
 import com.rajith.otrium.presentation_layer.databinding.ActivitySplashBinding
 import com.rajith.otrium.presentation_layer.di.SplashComponent
@@ -32,13 +30,11 @@ class SplashActivity : Activity(), SplashContract.View {
         viewBinding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            val w = window
-            w.setFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-            )
-        }
+        val w = window
+        w.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
     }
 
     override fun onResume() {
@@ -46,6 +42,9 @@ class SplashActivity : Activity(), SplashContract.View {
         presenter.onViewResumed()
     }
 
+    /**
+     * navigates user to profile screen after 2secs
+     */
     override fun navigateToProfile() {
         Handler().postDelayed({
             startActivity(Intent(this, ProfileActivity::class.java))
@@ -54,6 +53,9 @@ class SplashActivity : Activity(), SplashContract.View {
     }
 }
 
+/**
+ * This extension function gives the dependency tht can be used in this view
+ */
 private fun SplashActivity.getSplashComponent(): SplashComponent =
     (application as SplashComponentFactoryProvider).provideSplashComponentFactory().create(
         module = SplashModule(

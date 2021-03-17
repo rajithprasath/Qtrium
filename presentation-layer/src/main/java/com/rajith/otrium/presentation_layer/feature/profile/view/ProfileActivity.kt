@@ -23,11 +23,13 @@ import com.rajith.otrium.presentation_layer.feature.profile.adapter.PinnedRepoAd
 import com.rajith.otrium.presentation_layer.feature.profile.adapter.TopAndStarredRepoAdapter
 import com.rajith.otrium.presentation_layer.feature.profile.presenter.PROFILE_PRESENTER_TAG
 import com.rajith.otrium.presentation_layer.utils.CustomTypeFace
-import com.rajith.otrium.presentation_layer.utils.isConnected
 import com.rajith.otrium.presentation_layer.utils.showCustomUI
 import javax.inject.Inject
 import javax.inject.Named
 
+/**
+ * The class will respond to the user interaction in profile screen and shows the data to the user
+ */
 
 const val PROFILE_VIEW_TAG = "profileView"
 
@@ -48,22 +50,17 @@ class ProfileActivity : Activity(), ProfileContract.View {
         setContentView(viewBinding.root)
         showCustomUI(this)
         presenter.onViewCreated()
-
-        if(isConnected(this)){
-            presenter.getUserDetails()
-        }else{
-            var  failure = Failure.NoConnection()
-            displayError(failure)
-        }
-
     }
 
+    /**
+     * setting up the adapters
+     */
     override fun initializeAdapter() {
-        viewBinding.rvPinnedRepos.isNestedScrollingEnabled = false;
+        viewBinding.rvPinnedRepos.isNestedScrollingEnabled = false
         viewBinding.rvPinnedRepos.layoutManager = LinearLayoutManager(this)
         viewBinding.rvPinnedRepos.adapter = pinnedRepoAdapter
 
-        viewBinding.rvTopRepos.isNestedScrollingEnabled = false;
+        viewBinding.rvTopRepos.isNestedScrollingEnabled = false
         viewBinding.rvTopRepos.layoutManager = LinearLayoutManager(
             this,
             LinearLayoutManager.HORIZONTAL,
@@ -71,7 +68,7 @@ class ProfileActivity : Activity(), ProfileContract.View {
         )
         viewBinding.rvTopRepos.adapter = topRepoAdapter
 
-        viewBinding.rvStarredRepos.isNestedScrollingEnabled = false;
+        viewBinding.rvStarredRepos.isNestedScrollingEnabled = false
         viewBinding.rvStarredRepos.layoutManager = LinearLayoutManager(
             this,
             LinearLayoutManager.HORIZONTAL,
@@ -80,18 +77,30 @@ class ProfileActivity : Activity(), ProfileContract.View {
         viewBinding.rvStarredRepos.adapter = starredRepoAdapter
     }
 
+    /**
+     * update the pinned adapter after results comes from the api
+     */
     private fun updatePinnedRepos(repos: List<Edge>) {
         pinnedRepoAdapter.updateRepositories(repos)
     }
 
+    /**
+     * update the top adapter after results comes from the api
+     */
     private fun updateTopRepos(repos: List<Edge>) {
         topRepoAdapter.updateRepositories(repos)
     }
 
+    /**
+     * update the starred adapter after results comes from the api
+     */
     private fun updateStarredRepos(repos: List<Edge>) {
         starredRepoAdapter.updateRepositories(repos)
     }
 
+    /**
+     * binding the basic details of the user to views
+     */
     private fun setUserDetails(result: Result) {
         viewBinding.tvName.text = result.data.user.name
         viewBinding.tvUserName.text = result.data.user.login
@@ -100,9 +109,12 @@ class ProfileActivity : Activity(), ProfileContract.View {
         setFollowingsCount(result.data.user.following.totalCount.toString())
         Glide.with(this)
             .load(result.data.user.avatarUrl)
-            .into(viewBinding.ivAvatar);
+            .into(viewBinding.ivAvatar)
     }
 
+    /**
+     * display the followers count using spannable object
+     */
     private fun setFollowersCount(followersCount: String) {
         val followersStr = getString(
             R.string.txt_followers,
@@ -124,6 +136,9 @@ class ProfileActivity : Activity(), ProfileContract.View {
         viewBinding.tvFollowers.text = wordToSpan
     }
 
+    /**
+     * display the following count using spannable object
+     */
     private fun setFollowingsCount(followingsCount: String) {
         val followingStr = getString(
             R.string.txt_following,
@@ -152,22 +167,33 @@ class ProfileActivity : Activity(), ProfileContract.View {
         updateStarredRepos(result.data.user.starredRepositories.edges)
     }
 
+    /**
+     * display the errors that comes from api
+     */
     override fun displayError(error: Failure) {
-        println("sjjsjsjjsjsjs 4444444")
-        Toast.makeText(applicationContext,error.msg,Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, error.msg, Toast.LENGTH_SHORT).show()
     }
 
+    /**
+     * display the progress spinner
+     */
     override fun showLoading() {
         viewBinding.pbLoading.visibility = View.VISIBLE
         viewBinding.dataView.visibility = View.GONE
     }
 
+    /**
+     * hiding the progress spinner
+     */
     override fun hideLoading() {
         viewBinding.pbLoading.visibility = View.INVISIBLE
         viewBinding.dataView.visibility = View.VISIBLE
     }
 }
 
+/**
+ * This extension function gives the dependency tht can be used in this view
+ */
 private fun ProfileActivity.getProfileComponent(): ProfileComponent =
     (application as ProfileComponentFactoryProvider).provideProfileComponentFactory().create(
         module = ProfileModule(

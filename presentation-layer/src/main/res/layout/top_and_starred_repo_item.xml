@@ -86,7 +86,8 @@
             android:src="@drawable/ic_starr"
             android:layout_marginTop="25dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_description">
+            app:layout_constraintTop_toBottomOf="@+id/tv_description"
+            android:contentDescription="@string/txt_star_content_description">
         </ImageView>
 
         <TextView
@@ -113,7 +114,8 @@
             android:src="@drawable/ic_oval"
             app:layout_constraintStart_toEndOf="@+id/tv_fork_count"
             app:layout_constraintTop_toTopOf="@+id/tv_fork_count"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_fork_count">
+            app:layout_constraintBottom_toBottomOf="@+id/tv_fork_count"
+            android:contentDescription="@string/txt_language_content_description">
         </ImageView>
 
         <TextView

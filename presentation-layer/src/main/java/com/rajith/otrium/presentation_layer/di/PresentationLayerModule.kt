@@ -15,17 +15,25 @@ import dagger.Provides
 import dagger.Subcomponent
 import javax.inject.Named
 
+/**
+ * This file implements all the dependencies you want to make available from presentation-layer.
+ * Since there are two screen i will declare two separate modules.
+ */
+
 @Module(subcomponents = [SplashComponent::class, ProfileComponent::class])
-object PresentationlayerModule
+
+object PresentationLayerModule
 
 interface SplashComponentFactoryProvider {
     fun provideSplashComponentFactory(): SplashComponent.Factory
 }
 
+/**
+ * This comprise the dependencies corresponding to the respective feature in the presentation-layer.
+ */
 @ActivityScope
 @Subcomponent(modules = [SplashModule::class])
 interface SplashComponent {
-
     @Subcomponent.Factory
     interface Factory {
         fun create(module: SplashModule): SplashComponent
@@ -37,7 +45,6 @@ interface SplashComponent {
 
 @Module
 class SplashModule(private val activity: SplashActivity) {
-
     @ActivityScope
     @Provides
     @Named(SPLASH_VIEW_TAG)
@@ -54,10 +61,12 @@ interface ProfileComponentFactoryProvider {
     fun provideProfileComponentFactory(): ProfileComponent.Factory
 }
 
+/**
+ * This comprise the dependencies corresponding to the respective feature in the presentation-layer.
+ */
 @ActivityScope
 @Subcomponent(modules = [ProfileModule::class])
 interface ProfileComponent {
-
     @Subcomponent.Factory
     interface Factory {
         fun create(module: ProfileModule): ProfileComponent
@@ -69,7 +78,6 @@ interface ProfileComponent {
 
 @Module
 class ProfileModule(private val activity: ProfileActivity) {
-
     @ActivityScope
     @Provides
     @Named(PROFILE_VIEW_TAG)

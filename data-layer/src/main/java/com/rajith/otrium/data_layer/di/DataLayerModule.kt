@@ -6,8 +6,8 @@ import com.rajith.otrium.data_layer.datasource.ProfileApiDataSource
 import com.rajith.otrium.data_layer.datasource.ProfileDataSource
 import com.rajith.otrium.data_layer.datasource.ProfileDataSource.Companion.PROFILE_DATA_SOURCE_TAG
 import com.rajith.otrium.data_layer.repository.UserRepository
-import com.rajith.otrium.domain_layer.DomainlayerContract
-import com.rajith.otrium.domain_layer.DomainlayerContract.Data.Companion.DATA_REPOSITORY_TAG
+import com.rajith.otrium.domain_layer.DomainLayerContract
+import com.rajith.otrium.domain_layer.DomainLayerContract.Data.Companion.DATA_REPOSITORY_TAG
 import com.rajith.otrium.domain_layer.domain.Result
 import dagger.Module
 import dagger.Provides
@@ -19,24 +19,26 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 
+/**
+ * This file implements all the dependencies you want to make available from data-layer
+ */
+
 private const val TIMEOUT = 50L
 
 @Module
 object RepositoryModule {
-
     @Provides
     @Named(DATA_REPOSITORY_TAG)
     fun provideDataRepository(
         @Named(PROFILE_DATA_SOURCE_TAG)
         profileDs: ProfileDataSource
-    ): @JvmSuppressWildcards DomainlayerContract.Data.DataRepository<Result> =
+    ): @JvmSuppressWildcards DomainLayerContract.Data.DataRepository<Result> =
         UserRepository.apply { profileDataSource = profileDs }
 
 }
 
 @Module
-class DatasourceModule {
-
+class DataSourceModule {
     @Provides
     @Named(PROFILE_DATA_SOURCE_TAG)
     fun provideProfileDataSource(ds: ProfileApiDataSource): ProfileDataSource = ds

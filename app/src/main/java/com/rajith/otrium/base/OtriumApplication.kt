@@ -11,6 +11,11 @@ import com.rajith.otrium.presentation_layer.di.ProfileComponentFactoryProvider
 import com.rajith.otrium.presentation_layer.di.SplashComponent
 import com.rajith.otrium.presentation_layer.di.SplashComponentFactoryProvider
 
+/**
+ * This class implements an [Application] subclass instance which serves as entry point to the app.
+ * General tool configurations such as 'MultiDex' for 64k methods reached limit, and 'Dagger' for dependency
+ * inversion are initialized here.
+ */
 class OtriumApplication : Application(), SplashComponentFactoryProvider,
     ProfileComponentFactoryProvider {
 
@@ -23,7 +28,8 @@ class OtriumApplication : Application(), SplashComponentFactoryProvider,
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = DaggerApplicationComponent.factory().create(modules = UtilsModule(ctx = this))
+        appComponent =
+            DaggerApplicationComponent.factory().create(modules = UtilsModule(ctx = this))
     }
 
     override fun provideSplashComponentFactory(): SplashComponent.Factory =

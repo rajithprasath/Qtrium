@@ -1,11 +1,20 @@
 package com.rajith.otrium.domain_layer.domain
 
+/**
+ * This file contains all the relevant data classes for graphql response and a Error class
+ */
+data class Owner(val avatarUrl: String, val login: String)
 
-data class Owner(val avatarUrl: String,val login: String)
+data class PrimaryLanguage(val id: String, val name: String, val color: String)
 
-data class PrimaryLanguage(val id: String,val name: String,val color: String)
-
-data class Node(val id: String,val name: String,val description: String,val forkCount:Int,val primaryLanguage: PrimaryLanguage,val owner: Owner)
+data class Node(
+    val id: String,
+    val name: String,
+    val description: String,
+    val forkCount: Int,
+    val primaryLanguage: PrimaryLanguage,
+    val owner: Owner
+)
 
 data class Edge(val node: Node)
 
@@ -19,7 +28,18 @@ data class Followers(val totalCount: Int)
 
 data class Following(val totalCount: Int)
 
-data class User(val name: String,val id: String,val email:String,val avatarUrl:String,val login:String,val following:Following,val followers:Followers,val pinnedItems:PinnedItems,val topRepositories:TopRepository,val starredRepositories:StarredRepository)
+data class User(
+    val name: String,
+    val id: String,
+    val email: String,
+    val avatarUrl: String,
+    val login: String,
+    val following: Following,
+    val followers: Followers,
+    val pinnedItems: PinnedItems,
+    val topRepositories: TopRepository,
+    val starredRepositories: StarredRepository
+)
 
 data class Data(val user: User)
 
@@ -32,6 +52,4 @@ sealed class Failure(var msg: String = "n/a") {
     class InputParamsError(msg: String = "Parameters cannot be null") : Failure(msg = msg)
     class ServerError(msg: String = "Server error") : Failure(msg = msg)
     class NoData(msg: String = "No data") : Failure(msg = msg)
-    class NoConnection(msg: String = "No connection") : Failure(msg = msg)
-    class Unknown(msg: String = "Unknown error") : Failure(msg = msg)
 }

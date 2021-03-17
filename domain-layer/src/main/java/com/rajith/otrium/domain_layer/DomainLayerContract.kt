@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-interface DomainlayerContract {
+interface DomainLayerContract {
 
     interface Presentation {
 

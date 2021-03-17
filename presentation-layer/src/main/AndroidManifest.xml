@@ -12,8 +12,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".feature.splash.view.SplashActivity"
-            android:theme="@style/CustomTheme">
+            android:name=".feature.splash.view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

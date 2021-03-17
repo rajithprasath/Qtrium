@@ -6,4 +6,7 @@
     <string name="lbl_view_all"><u>View all</u></string>
     <string name="txt_followers">%1$s followers</string>
     <string name="txt_following">%1$s following</string>
+    <string name="txt_logo_content_description">logo</string>
+    <string name="txt_star_content_description">star</string>
+    <string name="txt_language_content_description">language</string>
 </resources>

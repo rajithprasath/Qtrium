@@ -11,11 +11,6 @@ class SplashPresenter @Inject constructor(
     @Named(SPLASH_VIEW_TAG) private val view: SplashContract.View?
 ) : SplashContract.Presenter {
 
-    override fun onAttach(mvpView: SplashContract.View) {
-    }
-
-    override fun onDetach() {
-    }
 
     override fun onViewResumed() {
         view?.navigateToProfile()

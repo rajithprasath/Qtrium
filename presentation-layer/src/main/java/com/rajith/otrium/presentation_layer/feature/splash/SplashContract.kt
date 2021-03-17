@@ -9,8 +9,6 @@ interface SplashContract {
     }
 
     interface Presenter {
-        fun onAttach(mvpView: View)
-        fun onDetach()
         fun onViewResumed()
     }
 

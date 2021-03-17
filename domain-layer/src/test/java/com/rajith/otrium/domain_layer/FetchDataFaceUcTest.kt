@@ -17,13 +17,13 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class FetchDataFaceUcTest {
 
-    private lateinit var usecase: DomainlayerContract.Presentation.UseCase<Query, Result>
-    private lateinit var mockRepository: DomainlayerContract.Data.DataRepository<Result>
+    private lateinit var useCase: DomainLayerContract.Presentation.UseCase<Query, Result>
+    private lateinit var mockRepository: DomainLayerContract.Data.DataRepository<Result>
 
     @Before
     fun setUp() {
         mockRepository = mock()
-        usecase = FetchDataFactUc(userDataRepository = mockRepository)
+        useCase = FetchDataFactUc(userDataRepository = mockRepository)
     }
 
     @After
@@ -31,39 +31,42 @@ class FetchDataFaceUcTest {
     }
 
     @Test
-    fun `Given null parameters, when usecase is invoked -- 'InputParamsError' is returned`() = runBlockingTest {
-        // given
-        val nullParams = null
-        // when
-        val response = usecase.run(params = nullParams)
-        // then
-        Assert.assertTrue(response.isLeft() && (response as? Either.Left<Failure>)?.a is Failure.InputParamsError)
-    }
+    fun `Given null parameters, when useCase is invoked -- 'InputParamsError' is returned`() =
+        runBlockingTest {
+            // given
+            val nullParams = null
+            // when
+            val response = useCase.run(params = nullParams)
+            // then
+            Assert.assertTrue(response.isLeft() && (response as? Either.Left<Failure>)?.a is Failure.InputParamsError)
+        }
 
     @Test
-    fun `Given empty parameters, when usecase is invoked -- 'Result' data is returned`() = runBlockingTest {
-        // given
-        val rightParams  = Query("")
-        whenever(mockRepository.fetchUserData(request = rightParams)).doReturn(getDummyResponse().right())
-        // when
-        val response = usecase.run(params = rightParams)
-        // then
-        Assert.assertTrue(response.isRight() && (response as? Either.Right<Result>) != null)
-    }
+    fun `Given empty parameters, when useCase is invoked -- 'Result' data is returned`() =
+        runBlockingTest {
+            // given
+            val rightParams = Query("")
+            whenever(mockRepository.fetchUserData(request = rightParams)).doReturn(getDummyResponse().right())
+            // when
+            val response = useCase.run(params = rightParams)
+            // then
+            Assert.assertTrue(response.isRight() && (response as? Either.Right<Result>) != null)
+        }
 
     // TODO: this test fails because the 'repository' instance is not accessible, i.e. cannot be mocked/stubbed
     @Test
-    fun `Given right parameters, when usecase is invoked -- 'Result' data is returned`() = runBlockingTest {
-        // given
-        val rightParams  = Query(getQueryString())
-        whenever(mockRepository.fetchUserData(request = rightParams)).doReturn(getDummyResponse().right())
-        // when
-        val response = usecase.run(params = rightParams)
-        // then
-        Assert.assertTrue(response.isRight() && (response as? Either.Right<Result>) != null)
-    }
+    fun `Given right parameters, when useCase is invoked -- 'Result' data is returned`() =
+        runBlockingTest {
+            // given
+            val rightParams = Query(getQueryString())
+            whenever(mockRepository.fetchUserData(request = rightParams)).doReturn(getDummyResponse().right())
+            // when
+            val response = useCase.run(params = rightParams)
+            // then
+            Assert.assertTrue(response.isRight() && (response as? Either.Right<Result>) != null)
+        }
 
-    fun getQueryString(): String {
+    private fun getQueryString(): String {
         return "query {" +
                 "user(login:\"jakewharton\") {" +
                 "name" +
@@ -139,8 +142,20 @@ class FetchDataFaceUcTest {
                 " }" +
                 " }"
     }
-    val list = listOf<Edge>()
-    val dummyUser = User("","","","","",following = Following(10),followers = Followers(10),pinnedItems = PinnedItems(edges = list),topRepositories = TopRepository(edges = list),starredRepositories = StarredRepository(edges = list))
-    val dummData = Data(dummyUser)
-    private fun getDummyResponse() = Result(data =dummData )
+
+    private val list = listOf<Edge>()
+    private val dummyUser = User(
+        "",
+        "",
+        "",
+        "",
+        "",
+        following = Following(10),
+        followers = Followers(10),
+        pinnedItems = PinnedItems(edges = list),
+        topRepositories = TopRepository(edges = list),
+        starredRepositories = StarredRepository(edges = list)
+    )
+    private val dummyData = Data(dummyUser)
+    private fun getDummyResponse() = Result(data = dummyData)
 }

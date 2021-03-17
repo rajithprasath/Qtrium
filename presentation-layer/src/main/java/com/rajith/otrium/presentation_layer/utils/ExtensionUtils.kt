@@ -1,28 +1,22 @@
 package com.rajith.otrium.presentation_layer.utils
 
 import android.app.Activity
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.view.View
 
-fun View.toggleVisibility() {
-    apply { visibility = if (visibility == View.VISIBLE) View.INVISIBLE else View.VISIBLE }
-}
+/**
+ * This file contains all the common util methods
+ */
 
+// used to change the status bar color
 fun showCustomUI(context: Activity) {
     val decorView = context.window.decorView
-    decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
+    }
 }
 
-fun isConnected(context: Context): Boolean {
-    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    val networkInfo: NetworkInfo?
-    networkInfo = connectivityManager.activeNetworkInfo
-    return networkInfo != null && networkInfo.isConnectedOrConnecting
-}
-
+// returns the query string that need to fetch data from qraphql api
 fun getQueryString(): String {
     return "query {" +
             "user(login:\"jakewharton\") {" +

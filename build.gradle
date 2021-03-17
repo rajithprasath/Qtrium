@@ -12,7 +12,7 @@ buildscript {
         targetsdk_version = 29
         buildtools_version = '29.0.3'
         androidxappcompat_version = '1.2.0'
-        androidxcore_version = '1.5.0-alpha04'
+        androidxcore_version = '1.5.0-beta03'
         androidxconstraintlayout_version = '2.0.4'
         // 3rd party
         arrow_version = '0.11.0'
@@ -20,7 +20,7 @@ buildscript {
         retrofit_version = '2.9.0'
         okhttp_version = '4.2.1'
         dagger_version = '2.28.3'
-        glide_version = '4.4.0'
+        glide_version = '4.11.0'
         // test
         junit_version = '4.13.1'
         nhaarmanmockito_version = '2.2.0'
